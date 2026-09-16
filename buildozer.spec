@@ -1,6 +1,6 @@
 [app]
 
-title = VocabularyApp
+title = VocabApp
 package.name = vocabapp
 package.domain = org.test
 
@@ -8,7 +8,8 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,xlsx,xlsm,mp3,ttc,ttf
 
 version = 0.1
-requirements = python3,kivy,openpyxl,edge-tts,aiohttp,attrs,multidict,yarl,async-timeout,idna,charset-normalizer
+# 只保留核心套件 + Android 原生 TTS 語音工具 (plyer)
+requirements = python3,kivy,openpyxl,plyer
 
 orientation = portrait
 fullscreen = 0
@@ -23,7 +24,6 @@ warn_on_root = 1
 android.permissions = INTERNET
 android.api = 33
 android.minapi = 21
-android.ndk_path = 
-android.sdk_path = 
 android.accept_sdk_license = True
-android.archs = arm64-v8a, armeabi-v7a
+# 只編譯 64 位元，避免雙架構衝突
+android.archs = arm64-v8a
