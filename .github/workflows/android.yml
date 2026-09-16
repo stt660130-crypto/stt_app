@@ -9,6 +9,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    # 關鍵：在工作流程層級直接清空 GitHub Actions 預設的 NDK 路徑
+    env:
+      ANDROID_NDK: ""
+      ANDROID_NDK_ROOT: ""
+      ANDROID_NDK_HOME: ""
+      ANDROID_NDK_LATEST_HOME: ""
+
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
@@ -25,9 +32,12 @@ jobs:
         pip install --upgrade pip setuptools
         pip install "cython<3.0.0" buildozer
 
-    - name: Build APK with Buildozer
+    - name: Clean & Build APK
       run: |
         export BUILDOZER_ACCEPT_SDK_LICENSE=1
+        # 刪除舊快取，確保不受舊構建影響
+        rm -rf .buildozer bin
+        # 執行打包
         buildozer -v android debug
 
     - name: Upload APK Artifact
