@@ -363,20 +363,17 @@ class VocabularyApp(App):
         ).start()
 
     async def _generate_and_play(self, text):
-        if not HAS_PYGAME:
-            print("Pygame 無法使用，無法播放音訊")
-            return
         try:
-            if pygame.mixer.music.get_busy():
-                pygame.mixer.music.stop()
-            
-            # 在 Android 上將音訊暫存為檔名播放比在記憶體(BytesIO)播放更穩定
+            # 存成臨時 MP3 檔案
             temp_file = os.path.join(self.user_data_dir, "temp_speech.mp3")
             communicate = edge_tts.Communicate(text, self.voice_en, rate="-15%")
             await communicate.save(temp_file)
             
-            pygame.mixer.music.load(temp_file)
-            pygame.mixer.music.play()
+            # 使用 Kivy 內建的 SoundLoader 播放
+            from kivy.core.audio import SoundLoader
+            sound = SoundLoader.load(temp_file)
+            if sound:
+                sound.play()
         except Exception as e:
             print(f"TTS 播放失敗: {e}")
 
