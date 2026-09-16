@@ -24,4 +24,5 @@ android.permissions = INTERNET, MODIFY_AUDIO_SETTINGS
 android.api = 33
 android.minapi = 24
 android.accept_sdk_license = True
+# 嚴格單一架構
 android.archs = arm64-v8a
