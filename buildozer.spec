@@ -8,7 +8,7 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,xlsx,xlsm,mp3,ttc,ttf
 
 version = 0.1
-requirements = python3,kivy,openpyxl,pygame,edge-tts,aiohttp,asyncio
+requirements = python3,kivy,openpyxl,edge-tts,aiohttp,attrs,multidict,yarl,async-timeout,idna,charset-normalizer
 
 orientation = portrait
 fullscreen = 0
