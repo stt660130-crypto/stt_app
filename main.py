@@ -24,7 +24,7 @@ def init_custom_font():
         if os.path.exists(font_path):
             try:
                 LabelBase.register(name="Roboto", fn_regular=font_path)
-                break
+                return
             except Exception:
                 pass
 
@@ -138,7 +138,10 @@ class VocabularyApp(App):
         if not os.path.exists(target_path):
             source_path = os.path.join(os.path.dirname(__file__), filename)
             if os.path.exists(source_path):
-                shutil.copy(source_path, target_path)
+                try:
+                    shutil.copy(source_path, target_path)
+                except Exception:
+                    pass
         return target_path if os.path.exists(target_path) else filename
 
     def load_excel_data(self, path):
@@ -187,12 +190,11 @@ class VocabularyApp(App):
             self.display_word(self.current_index)
 
     def speak_text(self, text):
-        if text and text != "—":
+        if text and text.strip() and text != "—":
             try:
-                # 呼叫 Android 原生語音引擎發音
-                tts.speak(text)
+                tts.speak(text.strip())
             except Exception as e:
-                print(f"TTS 發音失敗: {e}")
+                print(f"TTS 失敗: {e}")
 
 if __name__ == "__main__":
     VocabularyApp().run()
