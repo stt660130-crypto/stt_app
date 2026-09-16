@@ -190,11 +190,11 @@ class VocabularyApp(App):
             self.display_word(self.current_index)
 
     def speak_text(self, text):
-        if text and text.strip() and text != "—":
+        if text and isinstance(text, str) and text.strip() and text.strip() != "—":
             try:
                 tts.speak(text.strip())
-            except Exception as e:
-                print(f"TTS 失敗: {e}")
+            except Exception:
+                pass
 
 if __name__ == "__main__":
     VocabularyApp().run()
